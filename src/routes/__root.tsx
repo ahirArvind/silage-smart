@@ -11,6 +11,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { LanguageProvider } from "../lib/i18n";
+import { AppStateProvider } from "../lib/app-state";
+import { Toaster } from "../components/ui/sonner";
+
 
 function NotFoundComponent() {
   return (
@@ -77,23 +81,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "KrishiFeed AI — Feed & Silage Quality Testing" },
+      {
+        name: "description",
+        content:
+          "AI-powered rapid feed and silage quality testing prototype for dairy farmers: nutrition estimation, contamination screening, sensors and advisory.",
+      },
+      { name: "author", content: "KrishiFeed AI" },
+      { property: "og:title", content: "KrishiFeed AI — Feed & Silage Quality Testing" },
+      {
+        property: "og:description",
+        content: "Rapid AI screening of cattle feed and silage quality for dairy farmers.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -119,8 +136,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <LanguageProvider>
+        <AppStateProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <Toaster />
+        </AppStateProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
+
