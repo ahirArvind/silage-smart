@@ -106,7 +106,7 @@ function Landing() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild size="lg" className="h-14 px-7 text-base">
-                <Link to="/new-test">
+                <Link to="/new-test" search={{ type: undefined }}>
                   Start Testing <ArrowRight className="ml-1 size-5" />
                 </Link>
               </Button>

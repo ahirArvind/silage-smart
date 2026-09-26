@@ -64,7 +64,7 @@ function StoragePage() {
                 <div className="rounded-xl bg-secondary/70 p-3">
                   <p className="mt-5 font-display text-xl font-bold capitalize">{u.mouldRisk}</p>
                   <p className="text-xs text-muted-foreground">Mould risk</p>
-                  <StatusPill tone={riskTone(u.mouldRisk)} className="mt-2" />
+                  <StatusPill tone={riskTone(u.mouldRisk)} className="mt-2 capitalize">{u.mouldRisk}</StatusPill>
                 </div>
               </div>
 

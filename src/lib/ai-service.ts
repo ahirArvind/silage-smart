@@ -2,8 +2,8 @@ import type { RiskLevel, SampleType, TestRecord } from "./demo-data";
 
 export interface AnalyzeInput {
   sample_type: SampleType;
-  image?: string;
-  nir_data?: { status: string };
+  image?: string | undefined;
+  nir_data?: { status: string } | undefined;
   sensor_data?: { moisture: number; ph: number; temperature: number; humidity: number };
 }
 
@@ -79,7 +79,7 @@ export async function analyzeSample(input: AnalyzeInput, online: boolean): Promi
 
 export function toTestRecord(
   result: AnalyzeResult,
-  meta: { id: string; sampleType: SampleType; subtype: string; batch: string; imageUrl?: string; humidity: number; temperature: number },
+  meta: { id: string; sampleType: SampleType; subtype: string; batch: string; imageUrl?: string | undefined; humidity: number; temperature: number },
 ): TestRecord {
   return {
     id: meta.id,

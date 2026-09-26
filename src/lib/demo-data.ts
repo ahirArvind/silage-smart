@@ -12,7 +12,7 @@ export interface TestRecord {
   moisture: number;
   fibre: number;
   energy: number;
-  ph?: number;
+  ph?: number | undefined;
   temperature: number;
   humidity: number;
   mouldRisk: RiskLevel;
@@ -21,7 +21,7 @@ export interface TestRecord {
   sandRisk: RiskLevel;
   confidence: number;
   advisory: string;
-  imageUrl?: string;
+  imageUrl?: string | undefined;
   demo: boolean;
 }
 

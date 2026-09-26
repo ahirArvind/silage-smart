@@ -42,7 +42,7 @@ function Dashboard() {
     { label: t("storageAlerts"), value: 13, icon: Warehouse, tone: "bg-risk-soft text-risk" },
   ];
 
-  const latest = tests[0];
+  const latest = tests[0]!;
   const overview = [
     { name: t("protein"), value: latest.protein, target: 18, unit: "%" },
     { name: t("moisture"), value: latest.moisture, target: 10, unit: "%" },
@@ -67,7 +67,7 @@ function Dashboard() {
         </div>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button asChild size="lg" className="h-16 flex-1 text-lg sm:max-w-sm">
-            <Link to="/new-test">
+            <Link to="/new-test" search={{ type: undefined }}>
               <Plus className="mr-1 size-6" /> {t("startNewTest")}
             </Link>
           </Button>

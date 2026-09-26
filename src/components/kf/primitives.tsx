@@ -150,11 +150,11 @@ export function QrCode({ value, size = 132 }: { value: string; size?: number }) 
         if (isFinder(x, y)) return null;
         return on ? <rect key={i} x={x * s} y={y * s} width={s} height={s} fill="#14331f" /> : null;
       })}
-      {[
+      {([
         [0, 0],
         [n - 7, 0],
         [0, n - 7],
-      ].map(([fx, fy]) => (
+      ] as [number, number][]).map(([fx, fy]) => (
         <g key={`${fx}-${fy}`}>
           <rect x={fx * s} y={fy * s} width={7 * s} height={7 * s} fill="#14331f" />
           <rect x={(fx + 1) * s} y={(fy + 1) * s} width={5 * s} height={5 * s} fill="white" />
