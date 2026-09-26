@@ -12,7 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppFeedAnalysisRouteImport } from './routes/_app/feed-analysis'
 import { Route as AppNewTestRouteImport } from './routes/_app/new-test'
+import { Route as AppNirRouteImport } from './routes/_app/nir'
+import { Route as AppSilageAnalysisRouteImport } from './routes/_app/silage-analysis'
+import { Route as AppVisionRouteImport } from './routes/_app/vision'
 import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,9 +33,29 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFeedAnalysisRoute = AppFeedAnalysisRouteImport.update({
+  id: '/feed-analysis',
+  path: '/feed-analysis',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppNewTestRoute = AppNewTestRouteImport.update({
   id: '/new-test',
   path: '/new-test',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNirRoute = AppNirRouteImport.update({
+  id: '/nir',
+  path: '/nir',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSilageAnalysisRoute = AppSilageAnalysisRouteImport.update({
+  id: '/silage-analysis',
+  path: '/silage-analysis',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVisionRoute = AppVisionRouteImport.update({
+  id: '/vision',
+  path: '/vision',
   getParentRoute: () => AppRoute,
 } as any)
 const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
@@ -43,13 +67,21 @@ const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof AppDashboardRoute
+  '/feed-analysis': typeof AppFeedAnalysisRoute
   '/new-test': typeof AppNewTestRoute
+  '/nir': typeof AppNirRoute
+  '/silage-analysis': typeof AppSilageAnalysisRoute
+  '/vision': typeof AppVisionRoute
   '/api/analyze': typeof ApiAnalyzeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof AppDashboardRoute
+  '/feed-analysis': typeof AppFeedAnalysisRoute
   '/new-test': typeof AppNewTestRoute
+  '/nir': typeof AppNirRoute
+  '/silage-analysis': typeof AppSilageAnalysisRoute
+  '/vision': typeof AppVisionRoute
   '/api/analyze': typeof ApiAnalyzeRoute
 }
 export interface FileRoutesById {
@@ -57,20 +89,44 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/feed-analysis': typeof AppFeedAnalysisRoute
   '/_app/new-test': typeof AppNewTestRoute
+  '/_app/nir': typeof AppNirRoute
+  '/_app/silage-analysis': typeof AppSilageAnalysisRoute
+  '/_app/vision': typeof AppVisionRoute
   '/api/analyze': typeof ApiAnalyzeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/new-test' | '/api/analyze'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/feed-analysis'
+    | '/new-test'
+    | '/nir'
+    | '/silage-analysis'
+    | '/vision'
+    | '/api/analyze'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/new-test' | '/api/analyze'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/feed-analysis'
+    | '/new-test'
+    | '/nir'
+    | '/silage-analysis'
+    | '/vision'
+    | '/api/analyze'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_app/dashboard'
+    | '/_app/feed-analysis'
     | '/_app/new-test'
+    | '/_app/nir'
+    | '/_app/silage-analysis'
+    | '/_app/vision'
     | '/api/analyze'
   fileRoutesById: FileRoutesById
 }
@@ -103,11 +159,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/feed-analysis': {
+      id: '/_app/feed-analysis'
+      path: '/feed-analysis'
+      fullPath: '/feed-analysis'
+      preLoaderRoute: typeof AppFeedAnalysisRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/new-test': {
       id: '/_app/new-test'
       path: '/new-test'
       fullPath: '/new-test'
       preLoaderRoute: typeof AppNewTestRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/nir': {
+      id: '/_app/nir'
+      path: '/nir'
+      fullPath: '/nir'
+      preLoaderRoute: typeof AppNirRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/silage-analysis': {
+      id: '/_app/silage-analysis'
+      path: '/silage-analysis'
+      fullPath: '/silage-analysis'
+      preLoaderRoute: typeof AppSilageAnalysisRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/vision': {
+      id: '/_app/vision'
+      path: '/vision'
+      fullPath: '/vision'
+      preLoaderRoute: typeof AppVisionRouteImport
       parentRoute: typeof AppRoute
     }
     '/api/analyze': {
@@ -122,12 +206,20 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
+  AppFeedAnalysisRoute: typeof AppFeedAnalysisRoute
   AppNewTestRoute: typeof AppNewTestRoute
+  AppNirRoute: typeof AppNirRoute
+  AppSilageAnalysisRoute: typeof AppSilageAnalysisRoute
+  AppVisionRoute: typeof AppVisionRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
+  AppFeedAnalysisRoute: AppFeedAnalysisRoute,
   AppNewTestRoute: AppNewTestRoute,
+  AppNirRoute: AppNirRoute,
+  AppSilageAnalysisRoute: AppSilageAnalysisRoute,
+  AppVisionRoute: AppVisionRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
