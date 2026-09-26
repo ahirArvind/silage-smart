@@ -12,12 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppAdvisoryRouteImport } from './routes/_app/advisory'
+import { Route as AppCloudRouteImport } from './routes/_app/cloud'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppFeedAnalysisRouteImport } from './routes/_app/feed-analysis'
 import { Route as AppHistoryRouteImport } from './routes/_app/history'
 import { Route as AppNewTestRouteImport } from './routes/_app/new-test'
 import { Route as AppNirRouteImport } from './routes/_app/nir'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppReportsRouteImport } from './routes/_app/reports'
 import { Route as AppSensorsRouteImport } from './routes/_app/sensors'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppSilageAnalysisRouteImport } from './routes/_app/silage-analysis'
 import { Route as AppStorageRouteImport } from './routes/_app/storage'
 import { Route as AppVisionRouteImport } from './routes/_app/vision'
@@ -35,6 +39,11 @@ const AppRoute = AppRouteImport.update({
 const AppAdvisoryRoute = AppAdvisoryRouteImport.update({
   id: '/advisory',
   path: '/advisory',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCloudRoute = AppCloudRouteImport.update({
+  id: '/cloud',
+  path: '/cloud',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
@@ -62,9 +71,24 @@ const AppNirRoute = AppNirRouteImport.update({
   path: '/nir',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSensorsRoute = AppSensorsRouteImport.update({
   id: '/sensors',
   path: '/sensors',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
 const AppSilageAnalysisRoute = AppSilageAnalysisRouteImport.update({
@@ -91,12 +115,16 @@ const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/advisory': typeof AppAdvisoryRoute
+  '/cloud': typeof AppCloudRoute
   '/dashboard': typeof AppDashboardRoute
   '/feed-analysis': typeof AppFeedAnalysisRoute
   '/history': typeof AppHistoryRoute
   '/new-test': typeof AppNewTestRoute
   '/nir': typeof AppNirRoute
+  '/profile': typeof AppProfileRoute
+  '/reports': typeof AppReportsRoute
   '/sensors': typeof AppSensorsRoute
+  '/settings': typeof AppSettingsRoute
   '/silage-analysis': typeof AppSilageAnalysisRoute
   '/storage': typeof AppStorageRoute
   '/vision': typeof AppVisionRoute
@@ -105,12 +133,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/advisory': typeof AppAdvisoryRoute
+  '/cloud': typeof AppCloudRoute
   '/dashboard': typeof AppDashboardRoute
   '/feed-analysis': typeof AppFeedAnalysisRoute
   '/history': typeof AppHistoryRoute
   '/new-test': typeof AppNewTestRoute
   '/nir': typeof AppNirRoute
+  '/profile': typeof AppProfileRoute
+  '/reports': typeof AppReportsRoute
   '/sensors': typeof AppSensorsRoute
+  '/settings': typeof AppSettingsRoute
   '/silage-analysis': typeof AppSilageAnalysisRoute
   '/storage': typeof AppStorageRoute
   '/vision': typeof AppVisionRoute
@@ -121,12 +153,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/advisory': typeof AppAdvisoryRoute
+  '/_app/cloud': typeof AppCloudRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/feed-analysis': typeof AppFeedAnalysisRoute
   '/_app/history': typeof AppHistoryRoute
   '/_app/new-test': typeof AppNewTestRoute
   '/_app/nir': typeof AppNirRoute
+  '/_app/profile': typeof AppProfileRoute
+  '/_app/reports': typeof AppReportsRoute
   '/_app/sensors': typeof AppSensorsRoute
+  '/_app/settings': typeof AppSettingsRoute
   '/_app/silage-analysis': typeof AppSilageAnalysisRoute
   '/_app/storage': typeof AppStorageRoute
   '/_app/vision': typeof AppVisionRoute
@@ -137,12 +173,16 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/advisory'
+    | '/cloud'
     | '/dashboard'
     | '/feed-analysis'
     | '/history'
     | '/new-test'
     | '/nir'
+    | '/profile'
+    | '/reports'
     | '/sensors'
+    | '/settings'
     | '/silage-analysis'
     | '/storage'
     | '/vision'
@@ -151,12 +191,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/advisory'
+    | '/cloud'
     | '/dashboard'
     | '/feed-analysis'
     | '/history'
     | '/new-test'
     | '/nir'
+    | '/profile'
+    | '/reports'
     | '/sensors'
+    | '/settings'
     | '/silage-analysis'
     | '/storage'
     | '/vision'
@@ -166,12 +210,16 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/_app/advisory'
+    | '/_app/cloud'
     | '/_app/dashboard'
     | '/_app/feed-analysis'
     | '/_app/history'
     | '/_app/new-test'
     | '/_app/nir'
+    | '/_app/profile'
+    | '/_app/reports'
     | '/_app/sensors'
+    | '/_app/settings'
     | '/_app/silage-analysis'
     | '/_app/storage'
     | '/_app/vision'
@@ -205,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/advisory'
       fullPath: '/advisory'
       preLoaderRoute: typeof AppAdvisoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/cloud': {
+      id: '/_app/cloud'
+      path: '/cloud'
+      fullPath: '/cloud'
+      preLoaderRoute: typeof AppCloudRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/dashboard': {
@@ -242,11 +297,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNirRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/reports': {
+      id: '/_app/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/sensors': {
       id: '/_app/sensors'
       path: '/sensors'
       fullPath: '/sensors'
       preLoaderRoute: typeof AppSensorsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/silage-analysis': {
@@ -282,12 +358,16 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAdvisoryRoute: typeof AppAdvisoryRoute
+  AppCloudRoute: typeof AppCloudRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppFeedAnalysisRoute: typeof AppFeedAnalysisRoute
   AppHistoryRoute: typeof AppHistoryRoute
   AppNewTestRoute: typeof AppNewTestRoute
   AppNirRoute: typeof AppNirRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppReportsRoute: typeof AppReportsRoute
   AppSensorsRoute: typeof AppSensorsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppSilageAnalysisRoute: typeof AppSilageAnalysisRoute
   AppStorageRoute: typeof AppStorageRoute
   AppVisionRoute: typeof AppVisionRoute
@@ -295,12 +375,16 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAdvisoryRoute: AppAdvisoryRoute,
+  AppCloudRoute: AppCloudRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppFeedAnalysisRoute: AppFeedAnalysisRoute,
   AppHistoryRoute: AppHistoryRoute,
   AppNewTestRoute: AppNewTestRoute,
   AppNirRoute: AppNirRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppReportsRoute: AppReportsRoute,
   AppSensorsRoute: AppSensorsRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppSilageAnalysisRoute: AppSilageAnalysisRoute,
   AppStorageRoute: AppStorageRoute,
   AppVisionRoute: AppVisionRoute,
