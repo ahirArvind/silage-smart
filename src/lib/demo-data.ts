@@ -24,11 +24,11 @@ export interface TestRecord {
   imageUrl?: string | undefined;
   demo: boolean;
   farmerDetails?: {
-    name?: string;
-    phone?: string;
+    name?: string | undefined;
+    phone?: string | undefined;
     contactForTest: boolean;
     sendAdvice: boolean;
-  };
+  } | undefined;
 }
 
 export const FARMER = {
