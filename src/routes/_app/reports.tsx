@@ -27,11 +27,14 @@ function ReportsPage() {
   const { t } = useI18n();
   const { tests, activeSampleId } = useApp();
   const s = tests.find((x) => x.id === activeSampleId) ?? tests[0]!;
+  const farmerLine = s.farmerDetails
+    ? `Farmer: ${s.farmerDetails.name || "Not provided"}${s.farmerDetails.phone ? ` · Phone: ${s.farmerDetails.phone}` : ""}`
+    : `Farmer: ${FARMER.name} (${FARMER.farmerId}) · ${FARMER.farm}, ${FARMER.village} (demo)`;
 
   const download = () => {
     const lines = [
       `KrishiFeed AI — Prototype Test Report`,
-      `Farmer: ${FARMER.name} (${FARMER.farmerId}) · ${FARMER.farm}, ${FARMER.village}`,
+      farmerLine,
       `Sample: ${s.id} · ${s.subtype} · Batch ${s.batch}`,
       `Date: ${new Date(s.date).toLocaleString()}`,
       ``,
@@ -75,9 +78,18 @@ function ReportsPage() {
           <div className="space-y-4">
             <div>
               <p className="text-xs uppercase tracking-wide text-muted-foreground">Farmer</p>
-              <p className="font-semibold">{FARMER.name}</p>
-              <p className="text-sm text-muted-foreground">{FARMER.farm}</p>
-              <p className="text-sm text-muted-foreground">{FARMER.village} · {FARMER.farmerId}</p>
+              {s.farmerDetails ? (
+                <>
+                  <p className="font-semibold">{s.farmerDetails.name || "Not provided"}</p>
+                  {s.farmerDetails.phone && <p className="text-sm text-muted-foreground">{s.farmerDetails.phone}</p>}
+                </>
+              ) : (
+                <>
+                  <p className="font-semibold">{FARMER.name} (demo)</p>
+                  <p className="text-sm text-muted-foreground">{FARMER.farm}</p>
+                  <p className="text-sm text-muted-foreground">{FARMER.village} · {FARMER.farmerId}</p>
+                </>
+              )}
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-muted-foreground">Sample</p>
