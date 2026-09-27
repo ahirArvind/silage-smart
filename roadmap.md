@@ -1,0 +1,4 @@
+- [ ] Add optional farmer name, phone, and purpose-specific consent in New Test Step 1 without changing the other steps.
+- [ ] Show saved optional farmer details and withdrawal controls on the farmer profile dashboard.
+- [ ] Remove the standalone NIR Spectroscopy dashboard and its navigation while retaining NIR in the testing workflow.
+- [ ] Verify the new-test and farmer dashboard flows.
