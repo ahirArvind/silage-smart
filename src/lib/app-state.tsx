@@ -29,6 +29,7 @@ export interface DraftTest {
 interface Ctx {
   tests: TestRecord[];
   addTest: (t: TestRecord) => void;
+  withdrawContact: (id: string) => void;
   draft: DraftTest | null;
   setDraft: (d: DraftTest | null | ((prev: DraftTest | null) => DraftTest | null)) => void;
   online: boolean;
@@ -79,6 +80,35 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [online],
   );
 
+  const withdrawContact = useCallback((id: string) => {
+    setTests((prev) => prev.map((test) => test.id === id ? {
+      ...test,
+      farmerDetails: test.farmerDetails ? {
+        ...test.farmerDetails,
+        phone: undefined,
+        contactForTest: false,
+        sendAdvice: false,
+      } : undefined,
+    } : test));
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as TestRecord[];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved.map((test) => test.id === id ? {
+          ...test,
+          farmerDetails: test.farmerDetails ? {
+            ...test.farmerDetails,
+            phone: undefined,
+            contactForTest: false,
+            sendAdvice: false,
+          } : undefined,
+        } : test)));
+      }
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
+
   const toggleOnline = useCallback(() => {
     setOnline((prev) => {
       if (!prev) setPendingSync(0);
@@ -90,6 +120,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     () => ({
       tests,
       addTest,
+      withdrawContact,
       draft,
       setDraft,
       online,
@@ -100,7 +131,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       activeSampleId,
       setActiveSampleId,
     }),
-    [tests, addTest, draft, online, toggleOnline, pendingSync, demoMode, activeSampleId],
+    [tests, addTest, withdrawContact, draft, online, toggleOnline, pendingSync, demoMode, activeSampleId],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

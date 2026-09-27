@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
@@ -65,6 +66,10 @@ function NewTest() {
   const [subtype, setSubtype] = useState("Cattle Feed (Concentrate Mix)");
   const [batch, setBatch] = useState("B-4418");
   const [datetime, setDatetime] = useState(new Date().toISOString().slice(0, 16));
+  const [farmerName, setFarmerName] = useState("");
+  const [farmerPhone, setFarmerPhone] = useState("");
+  const [contactForTest, setContactForTest] = useState(false);
+  const [sendAdvice, setSendAdvice] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [sensors, setSensors] = useState<typeof DEMO_SENSOR_READING | null>(null);
   const [progress, setProgress] = useState(0);
@@ -129,6 +134,12 @@ function NewTest() {
       imageUrl,
       humidity: s.humidity,
       temperature: s.temperature,
+      farmerDetails: {
+        name: farmerName.trim() || undefined,
+        phone: (contactForTest || sendAdvice) && farmerPhone.trim() ? farmerPhone.trim() : undefined,
+        contactForTest: Boolean(farmerPhone.trim()) && contactForTest,
+        sendAdvice: Boolean(farmerPhone.trim()) && sendAdvice,
+      },
     });
     addTest(record);
     setActiveSampleId(record.id);
@@ -204,6 +215,40 @@ function NewTest() {
                 <Input id="dt" type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)} className="mt-1.5 h-12" />
               </div>
             </div>
+            <div className="space-y-4 border-t border-border pt-5">
+              <div>
+                <h3 className="font-display text-lg font-semibold">{lang === "hi" ? "किसान विवरण वैकल्पिक हैं" : "Farmer details are optional"}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {lang === "hi" ? "बिना फ़ोन नंबर के भी जाँच पूरी की जा सकती है। संपर्क विवरण केवल आपके चुने हुए उद्देश्य के लिए रखा जाता है।" : "A test can be completed without a phone. Contact is kept only for the purpose you choose."}
+                </p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label htmlFor="farmer-name">{lang === "hi" ? "नाम या उपनाम (वैकल्पिक)" : "Name or alias (optional)"}</Label>
+                  <Input id="farmer-name" autoComplete="off" value={farmerName} onChange={(e) => setFarmerName(e.target.value)} className="mt-1.5 h-12" />
+                </div>
+                <div>
+                  <Label htmlFor="farmer-phone">{lang === "hi" ? "फ़ोन (वैकल्पिक)" : "Phone (optional)"}</Label>
+                  <Input id="farmer-phone" type="tel" inputMode="tel" autoComplete="off" value={farmerPhone} onChange={(e) => setFarmerPhone(e.target.value)} className="mt-1.5 h-12" />
+                </div>
+              </div>
+              {farmerPhone.trim() && (
+                <div className="space-y-3" aria-label="Contact permissions">
+                  <p className="text-sm font-medium">{lang === "hi" ? "इस नंबर का उपयोग कब कर सकते हैं?" : "What may this number be used for?"}</p>
+                  <div className="flex items-start gap-2">
+                    <Checkbox id="contact-test" checked={contactForTest} onCheckedChange={(checked) => setContactForTest(checked === true)} />
+                    <Label htmlFor="contact-test" className="font-normal leading-snug">{lang === "hi" ? "इस जाँच के बारे में संपर्क करें" : "Contact me about this test"}</Label>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Checkbox id="contact-advice" checked={sendAdvice} onCheckedChange={(checked) => setSendAdvice(checked === true)} />
+                    <Label htmlFor="contact-advice" className="font-normal leading-snug">{lang === "hi" ? "सलाह संबंधी संदेश भेजें" : "Send advisory messages"}</Label>
+                  </div>
+                </div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                {lang === "hi" ? "आप केंद्र के माध्यम से संपर्क और संदेश की अनुमति वापस ले सकते हैं। जाँच का रिकॉर्ड अलग से रखा जाता है। इस डेमो में जानकारी केवल इस डिवाइस पर रहती है; कोई संदेश नहीं भेजा जाता।" : "You may withdraw contact and message permission through the centre. The test evidence remains separately recorded. In this demo, details stay on this device; no messages are sent."}
+              </p>
+            </div>
             <Button
               variant="outline"
               className="h-12"
@@ -212,7 +257,7 @@ function NewTest() {
               <QrIcon className="mr-2 size-5" /> Scan QR code (optional)
             </Button>
             <Button size="lg" className="h-14 w-full text-base" onClick={() => setStep(2)}>
-              {t("next")}
+              {lang === "hi" ? "फ़ोन के बिना जारी रखें या अनुमति सहेजें" : "Continue without phone or save consent"}
             </Button>
           </CardContent>
         </Card>

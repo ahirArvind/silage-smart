@@ -17,7 +17,6 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppFeedAnalysisRouteImport } from './routes/_app/feed-analysis'
 import { Route as AppHistoryRouteImport } from './routes/_app/history'
 import { Route as AppNewTestRouteImport } from './routes/_app/new-test'
-import { Route as AppNirRouteImport } from './routes/_app/nir'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppReportsRouteImport } from './routes/_app/reports'
 import { Route as AppSensorsRouteImport } from './routes/_app/sensors'
@@ -64,11 +63,6 @@ const AppHistoryRoute = AppHistoryRouteImport.update({
 const AppNewTestRoute = AppNewTestRouteImport.update({
   id: '/new-test',
   path: '/new-test',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppNirRoute = AppNirRouteImport.update({
-  id: '/nir',
-  path: '/nir',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -120,7 +114,6 @@ export interface FileRoutesByFullPath {
   '/feed-analysis': typeof AppFeedAnalysisRoute
   '/history': typeof AppHistoryRoute
   '/new-test': typeof AppNewTestRoute
-  '/nir': typeof AppNirRoute
   '/profile': typeof AppProfileRoute
   '/reports': typeof AppReportsRoute
   '/sensors': typeof AppSensorsRoute
@@ -138,7 +131,6 @@ export interface FileRoutesByTo {
   '/feed-analysis': typeof AppFeedAnalysisRoute
   '/history': typeof AppHistoryRoute
   '/new-test': typeof AppNewTestRoute
-  '/nir': typeof AppNirRoute
   '/profile': typeof AppProfileRoute
   '/reports': typeof AppReportsRoute
   '/sensors': typeof AppSensorsRoute
@@ -158,7 +150,6 @@ export interface FileRoutesById {
   '/_app/feed-analysis': typeof AppFeedAnalysisRoute
   '/_app/history': typeof AppHistoryRoute
   '/_app/new-test': typeof AppNewTestRoute
-  '/_app/nir': typeof AppNirRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/reports': typeof AppReportsRoute
   '/_app/sensors': typeof AppSensorsRoute
@@ -178,7 +169,6 @@ export interface FileRouteTypes {
     | '/feed-analysis'
     | '/history'
     | '/new-test'
-    | '/nir'
     | '/profile'
     | '/reports'
     | '/sensors'
@@ -196,7 +186,6 @@ export interface FileRouteTypes {
     | '/feed-analysis'
     | '/history'
     | '/new-test'
-    | '/nir'
     | '/profile'
     | '/reports'
     | '/sensors'
@@ -215,7 +204,6 @@ export interface FileRouteTypes {
     | '/_app/feed-analysis'
     | '/_app/history'
     | '/_app/new-test'
-    | '/_app/nir'
     | '/_app/profile'
     | '/_app/reports'
     | '/_app/sensors'
@@ -290,13 +278,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNewTestRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/nir': {
-      id: '/_app/nir'
-      path: '/nir'
-      fullPath: '/nir'
-      preLoaderRoute: typeof AppNirRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/profile': {
       id: '/_app/profile'
       path: '/profile'
@@ -363,7 +344,6 @@ interface AppRouteChildren {
   AppFeedAnalysisRoute: typeof AppFeedAnalysisRoute
   AppHistoryRoute: typeof AppHistoryRoute
   AppNewTestRoute: typeof AppNewTestRoute
-  AppNirRoute: typeof AppNirRoute
   AppProfileRoute: typeof AppProfileRoute
   AppReportsRoute: typeof AppReportsRoute
   AppSensorsRoute: typeof AppSensorsRoute
@@ -380,7 +360,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppFeedAnalysisRoute: AppFeedAnalysisRoute,
   AppHistoryRoute: AppHistoryRoute,
   AppNewTestRoute: AppNewTestRoute,
-  AppNirRoute: AppNirRoute,
   AppProfileRoute: AppProfileRoute,
   AppReportsRoute: AppReportsRoute,
   AppSensorsRoute: AppSensorsRoute,

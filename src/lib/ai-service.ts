@@ -79,7 +79,7 @@ export async function analyzeSample(input: AnalyzeInput, online: boolean): Promi
 
 export function toTestRecord(
   result: AnalyzeResult,
-  meta: { id: string; sampleType: SampleType; subtype: string; batch: string; imageUrl?: string | undefined; humidity: number; temperature: number },
+  meta: { id: string; sampleType: SampleType; subtype: string; batch: string; imageUrl?: string | undefined; humidity: number; temperature: number; farmerDetails?: TestRecord["farmerDetails"] },
 ): TestRecord {
   return {
     id: meta.id,
@@ -103,6 +103,7 @@ export function toTestRecord(
     advisory: result.advisory,
     imageUrl: meta.imageUrl,
     demo: true,
+    farmerDetails: meta.farmerDetails,
   };
 }
 
