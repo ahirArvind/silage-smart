@@ -20,7 +20,7 @@ const dict: Record<string, { en: string; hi: string }> = {
   nav_advisory: { en: "Farmer Advisory", hi: "किसान सलाह" },
   nav_reports: { en: "Reports", hi: "रिपोर्ट" },
   nav_cloud: { en: "Cloud Dashboard", hi: "क्लाउड डैशबोर्ड" },
-  nav_profile: { en: "Profile", hi: "प्रोफ़ाइल" },
+  nav_profile: { en: "Farmer details", hi: "किसान विवरण" },
   nav_settings: { en: "Settings", hi: "सेटिंग्स" },
   greeting: { en: "Good Morning, Farmer", hi: "सुप्रभात, किसान जी" },
   greetingSub: {

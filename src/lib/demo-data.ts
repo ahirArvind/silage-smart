@@ -23,6 +23,12 @@ export interface TestRecord {
   advisory: string;
   imageUrl?: string | undefined;
   demo: boolean;
+  farmerDetails?: {
+    name?: string;
+    phone?: string;
+    contactForTest: boolean;
+    sendAdvice: boolean;
+  };
 }
 
 export const FARMER = {
