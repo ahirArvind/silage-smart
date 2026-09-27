@@ -9,6 +9,7 @@ const dict: Record<string, { en: string; hi: string }> = {
     hi: "डेयरी किसानों के लिए AI आधारित चारा व साइलेज गुणवत्ता जाँच",
   },
   nav_dashboard: { en: "Dashboard", hi: "डैशबोर्ड" },
+  nav_farmerDashboard: { en: "Farmer Dashboard", hi: "किसान डैशबोर्ड" },
   nav_newTest: { en: "New Test", hi: "नई जाँच" },
   nav_feed: { en: "Feed Analysis", hi: "चारा विश्लेषण" },
   nav_silage: { en: "Silage Analysis", hi: "साइलेज विश्लेषण" },

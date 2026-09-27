@@ -11,3 +11,4 @@
 
 - Keep NIR simulation in the test workflow while removing its standalone page; the user requested the dashboard removed, not sensor processing.
 - Store optional farmer details per test in local device state; keep contact permissions separate and allow withdrawal without deleting test evidence.
+- Keep the farmer dashboard separate from the general dashboard and permission-management page so test-linked farmer information stays distinct from demo-wide metrics.

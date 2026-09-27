@@ -19,6 +19,7 @@ import {
   WifiOff,
   History,
   MessageSquareHeart,
+  UserRound,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ import { FARMER } from "@/lib/demo-data";
 
 const nav = [
   { to: "/dashboard", key: "nav_dashboard", icon: Home },
+  { to: "/farmer-dashboard", key: "nav_farmerDashboard", icon: UserRound },
   { to: "/new-test", key: "nav_newTest", icon: Scan },
   { to: "/feed-analysis", key: "nav_feed", icon: Leaf },
   { to: "/silage-analysis", key: "nav_silage", icon: Sprout },
@@ -227,7 +229,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
                 </DropdownMenuContent>
               </DropdownMenu>
               <Link
-                to="/profile"
+                to="/farmer-dashboard"
                 className="flex items-center gap-2 rounded-full border border-border bg-card py-1 pl-1 pr-3"
               >
                 <span className="grid size-7 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
