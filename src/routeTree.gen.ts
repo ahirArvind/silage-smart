@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppAdvisoryRouteImport } from './routes/_app/advisory'
 import { Route as AppCloudRouteImport } from './routes/_app/cloud'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppFarmerDashboardRouteImport } from './routes/_app/farmer-dashboard'
 import { Route as AppFeedAnalysisRouteImport } from './routes/_app/feed-analysis'
 import { Route as AppHistoryRouteImport } from './routes/_app/history'
 import { Route as AppNewTestRouteImport } from './routes/_app/new-test'
@@ -48,6 +49,11 @@ const AppCloudRoute = AppCloudRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFarmerDashboardRoute = AppFarmerDashboardRouteImport.update({
+  id: '/farmer-dashboard',
+  path: '/farmer-dashboard',
   getParentRoute: () => AppRoute,
 } as any)
 const AppFeedAnalysisRoute = AppFeedAnalysisRouteImport.update({
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/advisory': typeof AppAdvisoryRoute
   '/cloud': typeof AppCloudRoute
   '/dashboard': typeof AppDashboardRoute
+  '/farmer-dashboard': typeof AppFarmerDashboardRoute
   '/feed-analysis': typeof AppFeedAnalysisRoute
   '/history': typeof AppHistoryRoute
   '/new-test': typeof AppNewTestRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/advisory': typeof AppAdvisoryRoute
   '/cloud': typeof AppCloudRoute
   '/dashboard': typeof AppDashboardRoute
+  '/farmer-dashboard': typeof AppFarmerDashboardRoute
   '/feed-analysis': typeof AppFeedAnalysisRoute
   '/history': typeof AppHistoryRoute
   '/new-test': typeof AppNewTestRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/_app/advisory': typeof AppAdvisoryRoute
   '/_app/cloud': typeof AppCloudRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/farmer-dashboard': typeof AppFarmerDashboardRoute
   '/_app/feed-analysis': typeof AppFeedAnalysisRoute
   '/_app/history': typeof AppHistoryRoute
   '/_app/new-test': typeof AppNewTestRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/advisory'
     | '/cloud'
     | '/dashboard'
+    | '/farmer-dashboard'
     | '/feed-analysis'
     | '/history'
     | '/new-test'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/advisory'
     | '/cloud'
     | '/dashboard'
+    | '/farmer-dashboard'
     | '/feed-analysis'
     | '/history'
     | '/new-test'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/_app/advisory'
     | '/_app/cloud'
     | '/_app/dashboard'
+    | '/_app/farmer-dashboard'
     | '/_app/feed-analysis'
     | '/_app/history'
     | '/_app/new-test'
@@ -255,6 +267,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/farmer-dashboard': {
+      id: '/_app/farmer-dashboard'
+      path: '/farmer-dashboard'
+      fullPath: '/farmer-dashboard'
+      preLoaderRoute: typeof AppFarmerDashboardRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/feed-analysis': {
@@ -341,6 +360,7 @@ interface AppRouteChildren {
   AppAdvisoryRoute: typeof AppAdvisoryRoute
   AppCloudRoute: typeof AppCloudRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppFarmerDashboardRoute: typeof AppFarmerDashboardRoute
   AppFeedAnalysisRoute: typeof AppFeedAnalysisRoute
   AppHistoryRoute: typeof AppHistoryRoute
   AppNewTestRoute: typeof AppNewTestRoute
@@ -357,6 +377,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdvisoryRoute: AppAdvisoryRoute,
   AppCloudRoute: AppCloudRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppFarmerDashboardRoute: AppFarmerDashboardRoute,
   AppFeedAnalysisRoute: AppFeedAnalysisRoute,
   AppHistoryRoute: AppHistoryRoute,
   AppNewTestRoute: AppNewTestRoute,

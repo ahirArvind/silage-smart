@@ -2,3 +2,6 @@
 - [x] Show saved optional farmer details and withdrawal controls on the farmer profile dashboard.
 - [x] Remove the standalone NIR Spectroscopy dashboard and its navigation while retaining NIR in the testing workflow.
 - [x] Verify the new-test and farmer dashboard flows.
+- [x] Make optional farmer details Step 1, move sample registration to Step 2, and preserve the remaining test steps.
+- [x] Add a separate farmer dashboard showing saved farmer details and linked tests.
+- [x] Verify the five-step test flow and farmer dashboard on desktop and mobile.

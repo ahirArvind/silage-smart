@@ -104,7 +104,7 @@ function NewTest() {
   };
 
   const runAnalysis = async () => {
-    setStep(4);
+    setStep(5);
     setProgress(0);
     setActiveStep(0);
     const s = sensors ?? DEMO_SENSOR_READING;
@@ -151,12 +151,12 @@ function NewTest() {
     <div className="space-y-6">
       <SectionTitle
         title={t("nav_newTest")}
-        subtitle={lang === "hi" ? "चार आसान चरणों में नमूने की जाँच करें।" : "Test a sample in four simple steps."}
+        subtitle={lang === "hi" ? "पाँच आसान चरणों में नमूने की जाँच करें।" : "Test a sample in five simple steps."}
         action={<DemoTag>{t("demoBadge")}</DemoTag>}
       />
 
       <div className="flex items-center gap-2">
-        {[1, 2, 3, 4].map((n) => (
+        {[1, 2, 3, 4, 5].map((n) => (
           <div key={n} className="flex flex-1 items-center gap-2">
             <span
               className={cn(
@@ -166,7 +166,7 @@ function NewTest() {
             >
               {n}
             </span>
-            {n < 4 && <span className={cn("h-1 flex-1 rounded-full", step > n ? "bg-primary" : "bg-muted")} />}
+            {n < 5 && <span className={cn("h-1 flex-1 rounded-full", step > n ? "bg-primary" : "bg-muted")} />}
           </div>
         ))}
       </div>
@@ -174,27 +174,74 @@ function NewTest() {
       {step === 1 && (
         <Card>
           <CardContent className="space-y-5 p-5 sm:p-6">
-            <h3 className="font-display text-lg font-semibold">Step 1 — Select Sample</h3>
+            <p className="text-sm font-semibold text-primary">{lang === "hi" ? "चरण 1 · किसान विवरण" : "Step 1 · Farmer details"}</p>
+            <div className="space-y-4">
+              <div>
+                <h3 className="font-display text-lg font-semibold">{lang === "hi" ? "किसान विवरण वैकल्पिक हैं" : "Farmer details are optional"}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {lang === "hi" ? "बिना फ़ोन नंबर के भी जाँच पूरी की जा सकती है। संपर्क विवरण केवल आपके चुने हुए उद्देश्य के लिए रखा जाता है।" : "A test can be completed without a phone. Contact is kept only for the purpose you choose."}
+                </p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label htmlFor="farmer-name">{lang === "hi" ? "नाम या उपनाम (वैकल्पिक)" : "Name or alias (optional)"}</Label>
+                  <Input id="farmer-name" autoComplete="off" placeholder={lang === "hi" ? "नाम या उपनाम (वैकल्पिक)" : "Name or alias (optional)"} value={farmerName} onChange={(e) => setFarmerName(e.target.value)} className="mt-1.5 h-12" />
+                </div>
+                <div>
+                  <Label htmlFor="farmer-phone">{lang === "hi" ? "फ़ोन (वैकल्पिक)" : "Phone (optional)"}</Label>
+                  <Input id="farmer-phone" type="tel" inputMode="tel" autoComplete="off" placeholder={lang === "hi" ? "फ़ोन (वैकल्पिक)" : "Phone (optional)"} value={farmerPhone} onChange={(e) => setFarmerPhone(e.target.value)} className="mt-1.5 h-12" />
+                </div>
+              </div>
+              {farmerPhone.trim() && (
+                <div className="space-y-3" aria-label="Contact permissions">
+                  <p className="text-sm font-medium">{lang === "hi" ? "इस नंबर का उपयोग कब कर सकते हैं?" : "What may this number be used for?"}</p>
+                  <div className="flex items-start gap-2">
+                    <Checkbox id="contact-test" checked={contactForTest} onCheckedChange={(checked) => setContactForTest(checked === true)} />
+                    <Label htmlFor="contact-test" className="font-normal leading-snug">{lang === "hi" ? "इस जाँच के बारे में संपर्क करें" : "Contact me about this test"}</Label>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Checkbox id="contact-advice" checked={sendAdvice} onCheckedChange={(checked) => setSendAdvice(checked === true)} />
+                    <Label htmlFor="contact-advice" className="font-normal leading-snug">{lang === "hi" ? "सलाह संबंधी संदेश भेजें" : "Send advisory messages"}</Label>
+                  </div>
+                </div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                {lang === "hi" ? "आप केंद्र के माध्यम से संपर्क और संदेश की अनुमति वापस ले सकते हैं। जाँच का रिकॉर्ड अलग से रखा जाता है। इस डेमो में जानकारी केवल इस डिवाइस पर रहती है; कोई संदेश नहीं भेजा जाता।" : "You may withdraw contact and message permission through the centre. The test evidence remains separately recorded. In this demo, details stay on this device; no messages are sent."}
+              </p>
+            </div>
+            <Button size="lg" className="h-14 w-full text-base" onClick={() => setStep(2)}>
+              {lang === "hi" ? "फ़ोन के बिना जारी रखें या अनुमति सहेजें" : "Continue without phone or save consent"}
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {step === 2 && (
+        <Card>
+          <CardContent className="space-y-5 p-5 sm:p-6">
+            <h3 className="font-display text-lg font-semibold">{lang === "hi" ? "चरण 2 — नमूना चुनें" : "Step 2 — Select Sample"}</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               {(["feed", "silage"] as const).map((tp) => (
-                <button
+                <Button
                   key={tp}
+                  variant="outline"
                   onClick={() => chooseType(tp)}
+                  aria-pressed={sampleType === tp}
                   className={cn(
-                    "flex items-center gap-3 rounded-2xl border-2 p-5 text-left transition-all",
-                    sampleType === tp ? "border-primary bg-secondary" : "border-border hover:border-primary/40",
+                    "h-auto min-h-20 justify-start gap-3 border-2 p-4 text-left whitespace-normal",
+                    sampleType === tp ? "border-primary bg-secondary" : "border-border",
                   )}
                 >
-                  <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-                    {tp === "feed" ? <Leaf className="size-6" /> : <Sprout className="size-6" />}
+                  <span className="grid size-10 shrink-0 place-items-center rounded-md bg-primary/10 text-primary">
+                    {tp === "feed" ? <Leaf className="size-5" /> : <Sprout className="size-5" />}
                   </span>
                   <span>
-                    <span className="block text-lg font-semibold">{tp === "feed" ? t("feed") : t("silage")}</span>
-                    <span className="block text-sm text-muted-foreground">
+                    <span className="block text-base font-semibold">{tp === "feed" ? t("feed") : t("silage")}</span>
+                    <span className="block text-xs text-muted-foreground">
                       {tp === "feed" ? "Concentrate, pellet or home mix" : "Maize, sorghum or grass silage"}
                     </span>
                   </span>
-                </button>
+                </Button>
               ))}
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -215,58 +262,21 @@ function NewTest() {
                 <Input id="dt" type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)} className="mt-1.5 h-12" />
               </div>
             </div>
-            <div className="space-y-4 border-t border-border pt-5">
-              <div>
-                <h3 className="font-display text-lg font-semibold">{lang === "hi" ? "किसान विवरण वैकल्पिक हैं" : "Farmer details are optional"}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {lang === "hi" ? "बिना फ़ोन नंबर के भी जाँच पूरी की जा सकती है। संपर्क विवरण केवल आपके चुने हुए उद्देश्य के लिए रखा जाता है।" : "A test can be completed without a phone. Contact is kept only for the purpose you choose."}
-                </p>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <Label htmlFor="farmer-name">{lang === "hi" ? "नाम या उपनाम (वैकल्पिक)" : "Name or alias (optional)"}</Label>
-                  <Input id="farmer-name" autoComplete="off" value={farmerName} onChange={(e) => setFarmerName(e.target.value)} className="mt-1.5 h-12" />
-                </div>
-                <div>
-                  <Label htmlFor="farmer-phone">{lang === "hi" ? "फ़ोन (वैकल्पिक)" : "Phone (optional)"}</Label>
-                  <Input id="farmer-phone" type="tel" inputMode="tel" autoComplete="off" value={farmerPhone} onChange={(e) => setFarmerPhone(e.target.value)} className="mt-1.5 h-12" />
-                </div>
-              </div>
-              {farmerPhone.trim() && (
-                <div className="space-y-3" aria-label="Contact permissions">
-                  <p className="text-sm font-medium">{lang === "hi" ? "इस नंबर का उपयोग कब कर सकते हैं?" : "What may this number be used for?"}</p>
-                  <div className="flex items-start gap-2">
-                    <Checkbox id="contact-test" checked={contactForTest} onCheckedChange={(checked) => setContactForTest(checked === true)} />
-                    <Label htmlFor="contact-test" className="font-normal leading-snug">{lang === "hi" ? "इस जाँच के बारे में संपर्क करें" : "Contact me about this test"}</Label>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Checkbox id="contact-advice" checked={sendAdvice} onCheckedChange={(checked) => setSendAdvice(checked === true)} />
-                    <Label htmlFor="contact-advice" className="font-normal leading-snug">{lang === "hi" ? "सलाह संबंधी संदेश भेजें" : "Send advisory messages"}</Label>
-                  </div>
-                </div>
-              )}
-              <p className="text-xs text-muted-foreground">
-                {lang === "hi" ? "आप केंद्र के माध्यम से संपर्क और संदेश की अनुमति वापस ले सकते हैं। जाँच का रिकॉर्ड अलग से रखा जाता है। इस डेमो में जानकारी केवल इस डिवाइस पर रहती है; कोई संदेश नहीं भेजा जाता।" : "You may withdraw contact and message permission through the centre. The test evidence remains separately recorded. In this demo, details stay on this device; no messages are sent."}
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              className="h-12"
-              onClick={() => toast.info("QR scanning is simulated in this prototype — batch S-2211 linked")}
-            >
+            <Button variant="outline" className="h-12" onClick={() => toast.info("QR scanning is simulated in this prototype — batch S-2211 linked")}>
               <QrIcon className="mr-2 size-5" /> Scan QR code (optional)
             </Button>
-            <Button size="lg" className="h-14 w-full text-base" onClick={() => setStep(2)}>
-              {lang === "hi" ? "फ़ोन के बिना जारी रखें या अनुमति सहेजें" : "Continue without phone or save consent"}
-            </Button>
+            <div className="flex gap-3">
+              <Button variant="outline" className="h-14 flex-1" onClick={() => setStep(1)}>{t("back")}</Button>
+              <Button className="h-14 flex-[2] text-base" onClick={() => setStep(3)}>{t("next")}</Button>
+            </div>
           </CardContent>
         </Card>
       )}
 
-      {step === 2 && (
+      {step === 3 && (
         <Card>
           <CardContent className="space-y-5 p-5 sm:p-6">
-            <h3 className="font-display text-lg font-semibold">Step 2 — Capture Sample</h3>
+            <h3 className="font-display text-lg font-semibold">Step 3 — Capture Sample</h3>
             {imageUrl ? (
               <img src={imageUrl} alt="Sample preview" className="max-h-80 w-full rounded-2xl object-cover" />
             ) : (
@@ -302,10 +312,10 @@ function NewTest() {
                 : "Ensure the sample is evenly spread and well illuminated."}
             </p>
             <div className="flex gap-3">
-              <Button variant="outline" className="h-14 flex-1" onClick={() => setStep(1)}>
+              <Button variant="outline" className="h-14 flex-1" onClick={() => setStep(2)}>
                 {t("back")}
               </Button>
-              <Button className="h-14 flex-[2] text-base" onClick={() => setStep(3)}>
+              <Button className="h-14 flex-[2] text-base" onClick={() => setStep(4)}>
                 {t("next")}
               </Button>
             </div>
@@ -313,11 +323,11 @@ function NewTest() {
         </Card>
       )}
 
-      {step === 3 && (
+      {step === 4 && (
         <div className="grid gap-6 lg:grid-cols-3">
           <Card className="lg:col-span-2">
             <CardContent className="space-y-5 p-5 sm:p-6">
-              <h3 className="font-display text-lg font-semibold">Step 3 — Sensor Data</h3>
+              <h3 className="font-display text-lg font-semibold">Step 4 — Sensor Data</h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 {SENSORS.map((s) => (
                   <div key={s.id} className="flex items-center justify-between rounded-xl border border-border p-4">
@@ -348,7 +358,7 @@ function NewTest() {
                 </div>
               )}
               <div className="flex gap-3">
-                <Button variant="outline" className="h-14 flex-1" onClick={() => setStep(2)}>
+                <Button variant="outline" className="h-14 flex-1" onClick={() => setStep(3)}>
                   {t("back")}
                 </Button>
                 <Button className="h-14 flex-[2] text-base" onClick={runAnalysis}>
@@ -364,7 +374,7 @@ function NewTest() {
         </div>
       )}
 
-      {step === 4 && (
+      {step === 5 && (
         <Card>
           <CardContent className="space-y-6 p-6 sm:p-10">
             <div className="text-center">
